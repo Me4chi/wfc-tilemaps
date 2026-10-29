@@ -1,0 +1,37 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  csharp:
+    name: C# core (NUnit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet test tests/dotnet
+
+  godot:
+    name: Godot ${{ matrix.godot }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        godot: ['4.3', '4.6']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Godot
+        run: |
+          curl -sSfL -o godot.zip "https://github.com/godotengine/godot/releases/download/${{ matrix.godot }}-stable/Godot_v${{ matrix.godot }}-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          mv "Godot_v${{ matrix.godot }}-stable_linux.x86_64" godot-bin
+      - name: Import project (registers class_name scripts)
+        run: timeout 120 ./godot-bin --headless --path godot --editor --quit || true
+      - name: Run tests
+        run: |
+          timeout 300 ./godot-bin --headless --path godot -s res://tests/test_wfc.gd 2>&1 | tee test.log
+          grep -q ", 0 failures" test.log

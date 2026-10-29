@@ -1,0 +1,11 @@
+{
+  "name": "com.me4chi.wfc-tilemaps",
+  "version": "1.0.0",
+  "displayName": "WFC Tilemaps",
+  "description": "Wave Function Collapse for tilemaps: paint a small example, get endless maps in the same style. Overlapping (N×N fragments) and adjacent (tile pairs) models, fixed tiles, seamless output. Deterministic by seed.",
+  "unity": "2021.3",
+  "license": "MIT",
+  "keywords": ["procedural", "wave function collapse", "wfc", "tilemap", "level generation", "generator"],
+  "author": { "name": "Me4chi", "url": "https://github.com/Me4chi" },
+  "dependencies": { "com.unity.modules.tilemap": "1.0.0" }
+}

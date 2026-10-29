@@ -1,0 +1,7 @@
+; Minimal project so the addon and its tests can be opened and run directly.
+config_version=5
+
+[application]
+
+config/name="WFC Tilemaps"
+config/features=PackedStringArray("4.3")
